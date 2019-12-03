@@ -1,0 +1,9 @@
+<p>agreement-list works!</p>
+
+<p>Agreements click here</p>
+
+<app-agreement [agreement]="agreement" *ngFor="let agreement of agreementList">
+    <p>
+        {{agreement.agreementNo}}
+    </p>
+</app-agreement>

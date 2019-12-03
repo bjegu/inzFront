@@ -1,0 +1,103 @@
+<p>client-form works!</p>
+
+<div class="row">
+    Choose the type of a client:
+</div>
+        <!-- <div>
+                <input type="radio" value="Individual" name="clientType" >
+                <label>Individual client</label>
+            </div>
+            <div>
+                <input type="radio" value="Company" name="clientType">
+                <label>Business client</label>
+            </div> -->
+<input type = "radio" [(ngModel)] ="radioSelected" name="clientType" value="Company" (change)="changeType(radioSelected)"/>
+
+
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+
+    <label>
+        First name:
+        <input type="text" formControlName="name">
+    </label>
+
+    <label>
+        Last name:
+        <input type="text" formControlName="surname">
+    </label>
+
+    <label>
+        Pesel:
+        <input type="text" formControlName="pesel" pattern="[0-9]{11}">
+    </label>
+
+    <label>
+        Email:
+        <input type="text" formControlName="email">
+    </label>
+
+    <label>
+        Phone:
+        <input type="text" formControlName="phone">
+    </label>
+
+    <label>
+        Regon:
+        <input type="text" formControlName="regon">
+    </label>
+
+    <label>
+        Company name:
+        <input type="text" formControlName="compName">
+    </label>
+
+    <div formArrayName="address" *ngFor="let address of customerForm.get('address').controls;
+                    let i = index;">
+        <div [formGroupName]="i">
+
+            <div class="form-group">
+
+        <div class="row">
+            <label class="col-sm-2 control-label" [attr.for]="'address'+i">
+                Add new address
+            </label>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+
+                Address type:
+                <div>
+                    <input type="radio" value="Main address" name="addressType" formControlName="addressType">
+                    <label>Main address</label>
+                </div>
+                <div>
+                    <input type="radio" value="Postal address" name="addressType" formControlName="addressType">
+                    <label>Postal address</label>
+                </div>
+                <input formControlName="street" placeholder="Street">
+                <input formControlName="houseNumber" placeholder="House number">
+                <input formControlName="localNumber" placeholder="Local number">
+                <input formControlName="postalCode" placeholder="Postal Code">
+                <input formControlName="city" placeholder="City">
+            </div>
+            <div class="col-sm-1" *ngIf="customerForm.get('address').length>1">
+                    <button type="button" class="btn btn-danger"
+                    title="Delete this address" (click)="removeAddressForm(i)"> 
+                            <i class="far fa-times-circle"></i>
+                    </button>
+            </div>
+        </div>
+
+            <button type="button" (click)="addAddress()"> Add another address </button>
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+    <button type="submit" [disabled]="!customerForm.valid"> SUBMIT </button>
+
+</form>

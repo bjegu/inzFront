@@ -1,0 +1,11 @@
+<p>client-list works!</p>
+
+<p>Clients click here</p>
+
+
+<div *ngFor="let client of clientList">
+    <p>{{client.pesel}}</p>
+</div>
+
+<app-client [client]="client" *ngFor="let client of clientList" >
+</app-client>
