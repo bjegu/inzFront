@@ -54,13 +54,18 @@ export class ClientFormComponent implements OnInit {
   onSubmit(){
     //console.warn(this.customerForm.value);
     this.clientService.postClient(this.customerForm.value).subscribe();
+    if (this.customerForm.valid){
+      console.log("Form submitted successfully!");
+      this.customerForm.reset();
+    }
   }
 
   changeType(radioSelected: string): void{
     if (this.radioSelected =="Individual"){
-     
+     this.customerForm.controls['regon'].reset();
+     this.customerForm.controls['compName'].reset();
     } else {
-      
+      this.customerForm.controls['pesel'].reset();
     }
   }
 
