@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder,FormGroup, FormArray} from '@angular/forms'
+import {FormBuilder,FormGroup, FormArray, Validators} from '@angular/forms'
 import { ClientService } from '../client/client.service';
 
 @Component({
@@ -18,10 +18,10 @@ export class ClientFormComponent implements OnInit {
   ngOnInit() {
     this.radioSelected = "Individual";
     this.customerForm = this.fb.group({
-      name : [''],
-      surname: [''],
-      pesel: [''],
-      email:[''],
+      name : ['', Validators.required],
+      surname: ['', Validators.required],
+      pesel: ['',[Validators.minLength(11), Validators.maxLength(11)]],
+      email:['', Validators.email],
       phone:[''],
       regon:[''],
       compName:[''],
@@ -32,7 +32,7 @@ export class ClientFormComponent implements OnInit {
   createAddress(): FormGroup {
     return this.fb.group({
       addressType: [''],
-      street: [''],
+      street: ['',Validators.required],
       houseNumber: [''],
       localNumber:[''],
       postalCode: [''],
@@ -57,9 +57,27 @@ export class ClientFormComponent implements OnInit {
   }
 
   changeType(radioSelected: string): void{
-    if( this.radioSelected = "Individual"){
+    if (this.radioSelected =="Individual"){
+     
+    } else {
       
     }
+  }
+
+  get name() {
+    return this.customerForm.get('name');
+  }
+
+  get surname() {
+    return this.customerForm.get('surname');
+  }
+
+  get pesel() {
+    return this.customerForm.get('pesel');
+  }
+
+  get email() {
+    return this.customerForm.get('email');
   }
 
 }

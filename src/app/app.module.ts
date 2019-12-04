@@ -12,6 +12,7 @@ import { AgreementListComponent } from './agreement-list/agreement-list.componen
 import { AgreementService } from './agreement/agreement.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientFormComponent } from './client-form/client-form.component';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 
 
@@ -29,7 +30,8 @@ import { ClientFormComponent } from './client-form/client-form.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DigitOnlyModule
   ],
   providers: [
     ClientService,

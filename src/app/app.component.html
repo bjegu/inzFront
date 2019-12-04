@@ -1,24 +1,20 @@
-<h1>TUTAJ BY TRZA KLIKAĆ</h1>
+<h1>Fajna apka</h1>
 
 <div class="row">
   <div class="col-2">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a routerLink="/clientList" routerLinkActive="active" class="nav-link">List of Clients  </a>
         <a routerLink="/agreementList" routerLinkActive="active" class="nav-link">List of Agreements</a> 
+        <a routerLink="/addClient" routerLinkActive="active" class="nav-link">Add a client</a> 
       </div>
   </div>
 
   <div class="col-10">
       
-          <router-outlet></router-outlet>
-          <app-client-form></app-client-form>
-      
+          <router-outlet></router-outlet>  
   </div>
 </div>
 
-
-<!-- <app-client-list></app-client-list>
-<app-agreement-list></app-agreement-list> -->
 
 <!-- Toolbar -->
 

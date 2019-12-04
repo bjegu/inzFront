@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ClientComponent } from './client/client.component';
-import { AgreementComponent } from './agreement/agreement.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { AgreementListComponent } from './agreement-list/agreement-list.component';
+import { ClientFormComponent } from './client-form/client-form.component';
 
 
 const routes: Routes = [
   // {path: 'client/:id', component: ClientComponent},
   // {path: 'agreement/:id', component: AgreementComponent},
   {path: 'clientList', component: ClientListComponent},
-  {path: 'agreementList', component:AgreementListComponent}
+  {path: 'agreementList', component:AgreementListComponent},
+  {path: 'addClient', component:ClientFormComponent}
 ];
  
 @NgModule({
