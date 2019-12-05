@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder,FormGroup, FormArray, Validators} from '@angular/forms'
 import { ClientService } from '../client/client.service';
+import { lengthValidator } from '../custom-validators/regon-validator';
+
 
 @Component({
   selector: 'app-client-form',
@@ -12,6 +14,7 @@ export class ClientFormComponent implements OnInit {
   customerForm: FormGroup;
   address: FormArray;
   radioSelected: string;
+  showMsg: boolean =false;
 
   constructor(private fb: FormBuilder, private clientService: ClientService) { }
 
@@ -23,7 +26,7 @@ export class ClientFormComponent implements OnInit {
       pesel: ['',[Validators.minLength(11), Validators.maxLength(11)]],
       email:['', Validators.email],
       phone:[''],
-      regon:[''],
+      regon:['', lengthValidator],
       compName:[''],
       address: this.fb.array([this.createAddress()])
       });
@@ -57,6 +60,7 @@ export class ClientFormComponent implements OnInit {
     if (this.customerForm.valid){
       console.log("Form submitted successfully!");
       this.customerForm.reset();
+      this.showMsg = true;
     }
   }
 
@@ -83,6 +87,10 @@ export class ClientFormComponent implements OnInit {
 
   get email() {
     return this.customerForm.get('email');
+  }
+
+  get regon() {
+    return this.customerForm.get('regon');
   }
 
 }

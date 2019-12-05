@@ -1,11 +1,17 @@
-<p>client-list works!</p>
+<table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Surame</th>
+            <th>Pesel</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            <th>Company name</th>
+            <th>Regon number</th>
+        </tr>
+    
+<tr app-client [client]="client" *ngFor="let client of clientList">
 
-<p>Clients click here</p>
+</tr> 
 
 
-<div *ngFor="let client of clientList">
-    <p>{{client.pesel}}</p>
-</div>
-
-<app-client [client]="client" *ngFor="let client of clientList" >
-</app-client>
+</table>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Client } from './client.model';
 
 @Component({
-  selector: 'app-client',
+  selector: '[app-client]',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })

@@ -61,6 +61,11 @@
         <label>
             Regon:
             <input type="text" digitOnly formControlName="regon">
+            <div *ngIf="regon.invalid && (regon.dirty || regon.touched)" class="alert alert-danger">
+                    <div *ngIf="regon.errors.regonLength">
+                        Regon must be 9 or 14 characters long.
+                    </div>
+                </div>
         </label>
 
         <label>
@@ -75,7 +80,7 @@
 
         <label>
             Last name:
-            <input type="text" formControlName="surname">
+            <input type="text" formControlName="surname" required>
             <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="alert alert-danger">
                     <div *ngIf="surname.errors.required">
                         Last name is required.
@@ -145,7 +150,13 @@
         </div>
     </div>
 
-
+    <div class="row"  *ngIf="showMsg">
+        <div class="col-xs-12">
+          <p class="alert alert-success">
+              Data submitted successfully!
+          </p>
+    </div>
+</div>
 
     <button type="submit" [disabled]="!customerForm.valid"> SUBMIT </button>
 
