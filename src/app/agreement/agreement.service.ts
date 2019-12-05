@@ -14,4 +14,8 @@ export class AgreementService {
     return this.httpClient.get<Agreement[]>('http://localhost:4200/api/agreement/')
   }
 
+  deleteAgreement():Observable<Agreement>{
+    return this.httpClient.delete<Agreement>('http://localhost:4200/api/agreement/delete/{id}')
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Client } from './client.model';
 import { Observable } from 'rxjs';
 
@@ -13,8 +13,10 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClients():Observable<Client[] >{
-    return this.httpClient.get<Client[]>(this.apiGeneral+this.clientSuffix)
+  getClients(sortBy: string, sortReverse: boolean):Observable<Client[] >{
+
+    const params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc')
+    return this.httpClient.get<Client[]>(this.apiGeneral+this.clientSuffix,{params})
   }
 
   postClient(client: Client):Observable<Client>{

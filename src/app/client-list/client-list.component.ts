@@ -11,14 +11,28 @@ export class ClientListComponent implements OnInit {
 
   clientList: Client[] = [];
 
+  sortType = 'surname';
+  sortReverse = false;
+
   constructor(private clientService: ClientService) { }
 
   ngOnInit() {
-    this.clientService.getClients().subscribe(res => this.fetchData(res))
+    this.getClientsData();
   }
 
   fetchData(clients: Client[]){
     this.clientList = clients;
   }
 
+  getClientsData(){
+    this.clientService.getClients(this.sortType, this.sortReverse).subscribe(res => this.fetchData(res))
+  }
+
+  sort(columnName: string){
+    if (this.sortType === columnName){
+      this.sortReverse = !this.sortReverse;
+    }
+    this.sortType = columnName;
+    this.getClientsData();
+  }
 }

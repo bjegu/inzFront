@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 
+import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    DigitOnlyModule
+    DigitOnlyModule,
+    NgbPaginationModule
   ],
   providers: [
     ClientService,

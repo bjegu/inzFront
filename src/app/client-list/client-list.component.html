@@ -1,14 +1,50 @@
-<table class="table">
+<form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search the client" ng-model="searchClient">
+      </div>      
+    </div>
+  </form>
+
+{{sortType}} {{sortReverse}}
+<table class="table table-bordered table-striped">
         <tr>
-            <th>Name</th>
-            <th>Surame</th>
-            <th>Pesel</th>
+           <td>
+                <a (click)="sort('name')">
+                  Name
+                <span *ngIf="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
+                <span *ngIf="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a (click)="sort('surname')">
+                Surname
+                <span *ngIf="sortType == 'surname' && sortReverse" class="fa fa-caret-down"></span>
+                <span *ngIf="sortType == 'surname' && !sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a (click)="sort('pesel')">
+                    Pesel
+                <span *ngIf="sortType == 'pesel' && sortReverse" class="fa fa-caret-down"></span>
+                <span *ngIf="sortType == 'pesel' && !sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
             <th>Phone number</th>
             <th>Email</th>
-            <th>Company name</th>
+            <td>
+                <a (click)="sort('compName')">
+                    Company name
+                <span *ngIf="sortType == 'compName' && sortReverse" class="fa fa-caret-down"></span>
+                <span *ngIf="sortType == 'compName' && !sortReverse" class="fa fa-caret-up"></span>
+                </a>
+                </td>
             <th>Regon number</th>
+            
         </tr>
     
+
 <tr app-client [client]="client" *ngFor="let client of clientList">
 
 </tr> 
