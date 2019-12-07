@@ -105,7 +105,7 @@
         <input type="text" digitOnly formControlName="phone">
     </label>
 
-    <div formArrayName="address" *ngFor="let address of customerForm.get('address').controls;
+    <div formArrayName="address" *ngFor="let address of address.controls;
                     let i = index;">
         <div [formGroupName]="i">
 
@@ -135,7 +135,7 @@
                         <input formControlName="postalCode" placeholder="Postal Code">
                         <input formControlName="city" placeholder="City">
                     </div>
-                    <div class="col-sm-1" *ngIf="customerForm.get('address').length>1">
+                    <div class="col-sm-1" *ngIf="address.length > 1">
                         <button type="button" class="btn btn-danger" title="Delete this address"
                             (click)="removeAddressForm(i)">
                             <i class="far fa-times-circle"></i>
