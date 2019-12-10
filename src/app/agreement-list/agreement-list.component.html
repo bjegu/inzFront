@@ -1,9 +1,34 @@
-<p>agreement-list works!</p>
-
-<p>Agreements click here</p>
+<form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search the agreement" ng-model="searchAgreement">
+      </div>      
+    </div>
+  </form>
 
 <app-agreement [agreement]="agreement" *ngFor="let agreement of agreementList">
     <p>
         {{agreement.agreementNo}}
     </p>
 </app-agreement>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>
+            Agreement number
+        </td>
+        <td>
+            Start date
+        </td>
+        <td>
+            End date
+        </td>
+        <td>
+            Is the agreement active?
+        </td>
+        <td>
+            Client - co tutaj dodać?
+        </td>
+    </tr>
+</table>

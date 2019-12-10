@@ -1,0 +1,37 @@
+<div class="row">
+    <b>Add a new agreement</b>
+</div>
+
+    <form [formGroup]="agreementForm" (ngSubmit)="onSubmit()">
+        <div>
+        <label>
+            Agreement Number
+            <input type = "text" formControlName="agreementNo">
+        </label>
+
+        <label>
+            Start date
+            <input type = "text" formControlName="start">
+        </label>
+
+        <label>
+            Finish date
+            <input type = "text" formControlName="end">
+        </label>
+
+        <label>
+            Additional info
+            <input type = "text" formControlName="additional">
+        </label>
+
+        <label>
+            Client
+            <input type = "text" formControlName="client">
+        </label>
+    </div>  
+
+        <button type="submit" > SUBMIT </button>
+
+    </form>
+
+

@@ -26,7 +26,7 @@ export class ClientFormComponent implements OnInit {
       pesel: ['',[Validators.minLength(11), Validators.maxLength(11)]],
       email:['', Validators.email],
       phone:[''],
-      regon:['', lengthValidator],
+      regon:[null, lengthValidator],
       compName:[''],
       address: this.fb.array([this.createAddress()])
       });

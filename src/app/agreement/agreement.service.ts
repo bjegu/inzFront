@@ -8,10 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class AgreementService {
 
+  apiGeneral ='http://localhost:4200/api/';
+  agreementSuffix = 'agreement/';
+
   constructor(private httpClient: HttpClient) { }
 
   getAgreement():Observable<Agreement[]>{
     return this.httpClient.get<Agreement[]>('http://localhost:4200/api/agreement/')
+  }
+
+  postAgreement(agreement:Agreement):Observable<Agreement>{
+    return this.httpClient.post<Agreement>(this.apiGeneral+this.agreementSuffix, agreement);
   }
 
   deleteAgreement():Observable<Agreement>{
