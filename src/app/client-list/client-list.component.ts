@@ -13,6 +13,7 @@ export class ClientListComponent implements OnInit {
 
   sortType = 'surname';
   sortReverse = false;
+  searchClient: string;
 
   constructor(private clientService: ClientService) { }
 
@@ -25,7 +26,7 @@ export class ClientListComponent implements OnInit {
   }
 
   getClientsData(){
-    this.clientService.getClients(this.sortType, this.sortReverse).subscribe(res => this.fetchData(res))
+    this.clientService.getClients(this.sortType, this.sortReverse, this.searchClient).subscribe(res => this.fetchData(res))
   }
 
   sort(columnName: string){
@@ -35,4 +36,6 @@ export class ClientListComponent implements OnInit {
     this.sortType = columnName;
     this.getClientsData();
   }
+
+  
 }

@@ -13,9 +13,13 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClients(sortBy: string, sortReverse: boolean):Observable<Client[] >{
-
-    const params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc')
+  getClients(sortBy: string, sortReverse: boolean, searchClient: string):Observable<Client[] >{
+    let params;
+    if (searchClient!=null) {
+      params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc').set('search', searchClient);
+    } else{
+      params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc')
+    }
     return this.httpClient.get<Client[]>(this.apiGeneral+this.clientSuffix,{params})
   }
 

@@ -19,7 +19,7 @@ export class AgreementFormComponent implements OnInit {
       start: [''],
       end: [''],
       additional:[''],
-      client:['']
+      clientId:['']
     }
     )
   }

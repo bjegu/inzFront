@@ -1,13 +1,16 @@
-<form>
+
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
-        <input type="text" class="form-control" placeholder="Search the client" ng-model="searchClient">
+        <input type="text" 
+        class="form-control" placeholder="Search the client" 
+        [(ngModel)]="searchClient"
+        (keyup.enter)="getClientsData()">
       </div>      
     </div>
-  </form>
+{{searchClient}}
 
-{{sortType}} {{sortReverse}}
+
 <table class="table table-bordered table-striped">
         <tr>
            <td>
