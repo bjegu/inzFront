@@ -4,17 +4,18 @@ import { ClientListComponent } from './client-list/client-list.component';
 import { AgreementListComponent } from './agreement-list/agreement-list.component';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
+import { AdminGuardService } from './security/admin-guard.service';
 
 
 const routes: Routes = [
   // {path: 'client/:id', component: ClientComponent},
   // {path: 'agreement/:id', component: AgreementComponent},
-  {path: 'clientList', component: ClientListComponent},
-  {path: 'agreementList', component:AgreementListComponent},
-  {path: 'addClient', component:ClientFormComponent},
-  {path: 'addAgreement', component:AgreementFormComponent}
+  { path: 'clientList', component: ClientListComponent, canActivate: [AdminGuardService] },
+  { path: 'agreementList', component: AgreementListComponent },
+  { path: 'addClient', component: ClientFormComponent, canActivate: [AdminGuardService] },
+  { path: 'addAgreement', component: AgreementFormComponent, canActivate: [AdminGuardService] }
 ];
- 
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

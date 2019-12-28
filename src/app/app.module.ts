@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClientComponent } from './client/client.component';
 import { ClientListComponent } from './client-list/client-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClientService } from './client/client.service';
 import { AgreementComponent } from './agreement/agreement.component';
 import { AgreementListComponent } from './agreement-list/agreement-list.component';
@@ -16,7 +16,15 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
+import { BasicAuthHtppInterceptorService } from './security/basic-http-auth.interceptor';
+import { AuthenticationService } from './security/authentication.service';
+import { AdminGuardService } from './security/admin-guard.service';
+import { LoginFormComponent } from './login-form/login-form.component';
 
+
+const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true },
+];
 
 @NgModule({
   declarations: [
@@ -26,7 +34,8 @@ import { AgreementFormComponent } from './agreement-form/agreement-form.componen
     AgreementComponent,
     AgreementListComponent,
     ClientFormComponent,
-    AgreementFormComponent
+    AgreementFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +48,10 @@ import { AgreementFormComponent } from './agreement-form/agreement-form.componen
   ],
   providers: [
     ClientService,
-    AgreementService
+    AgreementService,
+    AuthenticationService,
+    AdminGuardService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

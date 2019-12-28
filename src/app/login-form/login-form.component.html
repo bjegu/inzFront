@@ -1,0 +1,14 @@
+<div class="row login-form">
+    <form id="form-signin" class="col-12" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="row login-control">
+              <span class="col-4">Username:</span>
+              <input placeholder="Username" id="username" name="username" class="col-8" type="text" formControlName="username"  autocomplete="username" required>
+        </div>
+        <div class="row login-control">
+            <span class="col-4">Password:</span>
+            <input placeholder="Password" id="password" name="password" class="col-8" type="password" formControlName="password" autocomplete="password" required>
+        </div>
+        <div *ngIf="loginFailed" class="row alert alert-danger"> Invalid credentials</div>
+        <button class="login-button" type="submit" [disabled]="!loginForm.valid"> SIGN IN </button>
+    </form>
+  </div>
