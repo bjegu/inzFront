@@ -48,7 +48,7 @@
         </tr>
     
 
-<tr app-client [client]="client" *ngFor="let client of clientList">
+<tr app-client [client]="client" *ngFor="let client of clientList" (click)="getDetails(client)">
 
 </tr> 
 
