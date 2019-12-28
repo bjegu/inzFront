@@ -6,27 +6,54 @@
         <div>
         <label>
             Agreement Number
-            <input type = "text" formControlName="agreementNo">
+            <input class="form-control" type = "text" formControlName="agreementNo">
+        </label>
+
+        <label>
+            Agreement Type
+            <input class="form-control" type = "text" formControlName="agreement_type"
+            [ngbTypeahead]="searchType"
+            [inputFormatter]="typeFormatter"
+            [resultFormatter]="typeFormatter"
+            [editable]='false'>
         </label>
 
         <label>
             Start date
-            <input type = "text" formControlName="start">
+            <!-- <input type = "text" formControlName="start"> -->
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" formControlName="start" ngbDatepicker #ds="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="ds.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                </div>
+              </div>
         </label>
 
         <label>
             Finish date
-            <input type = "text" formControlName="end">
+            <!-- <input type = "text" formControlName="end"> -->
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" formControlName="end" ngbDatepicker #de="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="de.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                </div>
+              </div>
         </label>
 
         <label>
             Additional info
-            <input type = "text" formControlName="additional">
+            <input class="form-control" type = "text" formControlName="additional">
         </label>
 
         <label>
             Client
-            <input type = "text" formControlName="clientId">
+            <input class="form-control" type = "text" formControlName="client"
+            [ngbTypeahead]="searchClient"
+            [inputFormatter]="clientFormatter"
+            [resultFormatter]="clientFormatter"
+            [editable]='false'>
         </label>
     </div>  
 
