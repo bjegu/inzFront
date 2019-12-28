@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Agreement } from './agreement.model';
+import { Agreement, AgreementType } from './agreement.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -23,6 +23,10 @@ export class AgreementService {
 
   deleteAgreement():Observable<Agreement>{
     return this.httpClient.delete<Agreement>('http://localhost:4200/api/agreement/delete/{id}')
+  }
+
+  getAgreementType():Observable<AgreementType[]>{
+    return this.httpClient.get<AgreementType[]>('http://localhost:4200/api/agrtype/showall')
   }
 
 }

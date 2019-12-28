@@ -10,6 +10,15 @@
         </label>
 
         <label>
+            Agreement Type
+            <input type = "text" formControlName="agreement_type"
+            [ngbTypeahead]="searchType"
+            [inputFormatter]="typeFormatter"
+            [resultFormatter]="typeFormatter"
+            [editable]='false'>
+        </label>
+
+        <label>
             Start date
             <input type = "text" formControlName="start">
         </label>
@@ -26,7 +35,11 @@
 
         <label>
             Client
-            <input type = "text" formControlName="clientId">
+            <input type = "text" formControlName="client"
+            [ngbTypeahead]="searchClient"
+            [inputFormatter]="clientFormatter"
+            [resultFormatter]="clientFormatter"
+            [editable]='false'>
         </label>
     </div>  
 
