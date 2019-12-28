@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { AgreementType } from '../agreement/agreement.model';
 import { Router } from '@angular/router';
+import { StringUtils } from '../shared/string.utils';
 
 @Component({
   selector: 'app-agreement-form',
@@ -36,8 +37,8 @@ export class AgreementFormComponent implements OnInit {
   onSubmit() {
     console.warn(this.agreementForm.value);
     const toSubmit = this.agreementForm.value;
-    toSubmit.start = this.convertDate(toSubmit.start)
-    toSubmit.end = this.convertDate(toSubmit.end)
+    toSubmit.start = StringUtils.convertDate(toSubmit.start)
+    toSubmit.end = StringUtils.convertDate(toSubmit.end)
     this.agreementService.postAgreement(toSubmit).subscribe(() => this.router.navigateByUrl('/agreementList'));
   }
 
@@ -55,7 +56,4 @@ export class AgreementFormComponent implements OnInit {
   )
   typeFormatter = (type: AgreementType) => type ? type.agrName : ""
 
-  convertDate(date: {year : number,month: number, day:number}): string{
-    return date.year+'-'+date.month+'-'+date.day
-  }
 }
