@@ -6,6 +6,7 @@ import { Client } from '../client/client.model';
 import { Observable } from 'rxjs';
 import { map, switchMap, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { AgreementType } from '../agreement/agreement.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agreement-form',
@@ -17,7 +18,7 @@ export class AgreementFormComponent implements OnInit {
   agreementForm: FormGroup;
   types: AgreementType[] = [];
 
-  constructor(private fb: FormBuilder, private agreementService: AgreementService, private clientService: ClientService) { }
+  constructor(private fb: FormBuilder, private agreementService: AgreementService, private clientService: ClientService, private router: Router) { }
 
   ngOnInit() {
     this.agreementForm = this.fb.group({
@@ -26,18 +27,18 @@ export class AgreementFormComponent implements OnInit {
       end: [''],
       additional: [''],
       client: [''],
-      agreement_type: [null]
+      agreement_type: [null],
+      active: [true]
     })
     this.agreementService.getAgreementType().subscribe(res => this.types = res)
   }
 
   onSubmit() {
     console.warn(this.agreementForm.value);
-    let object = this.agreementForm.value
-    // const clientId = this.agreementForm.value.client.clientId
-    // delete object.client
-    // object.clientId = clientId
-    this.agreementService.postAgreement(object).subscribe();
+    const toSubmit = this.agreementForm.value;
+    toSubmit.start = this.convertDate(toSubmit.start)
+    toSubmit.end = this.convertDate(toSubmit.end)
+    this.agreementService.postAgreement(toSubmit).subscribe(() => this.router.navigateByUrl('/agreementList'));
   }
 
   searchClient = (text$: Observable<string>) => text$
@@ -53,4 +54,8 @@ export class AgreementFormComponent implements OnInit {
     map(term => this.types.filter(type => type.agrName.includes(term)).slice(0, 10))
   )
   typeFormatter = (type: AgreementType) => type ? type.agrName : ""
+
+  convertDate(date: {year : number,month: number, day:number}): string{
+    return date.year+'-'+date.month+'-'+date.day
+  }
 }

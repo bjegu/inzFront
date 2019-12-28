@@ -14,7 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 
-import {NgbPaginationModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
 
 
@@ -36,7 +36,8 @@ import { AgreementFormComponent } from './agreement-form/agreement-form.componen
     FormsModule,
     DigitOnlyModule,
     NgbPaginationModule,
-    NgbTypeaheadModule
+    NgbTypeaheadModule,
+    NgbDatepickerModule
   ],
   providers: [
     ClientService,
