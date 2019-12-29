@@ -26,4 +26,12 @@ export class ClientService {
   postClient(client: Client):Observable<Client>{
     return this.httpClient.post<Client>(this.apiGeneral+this.clientSuffix, client)
   }
+  
+  getClientById(id: String):Observable<Client>{
+    return this.httpClient.get<Client>(this.apiGeneral+this.clientSuffix+id);
+  }
+
+  deleteClient(id: String):Observable<Client>{
+    return this.httpClient.delete<Client>(this.apiGeneral+this.clientSuffix+'delete/'+id);
+  }
 }

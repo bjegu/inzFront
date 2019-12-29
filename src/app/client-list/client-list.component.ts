@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../client/client.model';
 import { ClientService } from '../client/client.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-client-list',
@@ -15,7 +17,7 @@ export class ClientListComponent implements OnInit {
   sortReverse = false;
   searchClient: string;
 
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService, private router: Router) { }
 
   ngOnInit() {
     this.getClientsData();
@@ -35,6 +37,10 @@ export class ClientListComponent implements OnInit {
     }
     this.sortType = columnName;
     this.getClientsData();
+  }
+
+  getDetails(client:Client): void{
+    this.router.navigateByUrl("/client/"+client.uuid);
   }
 
   

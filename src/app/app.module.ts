@@ -14,9 +14,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 
-import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule, NgbActiveModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
 import { PagerComponent } from './shared/pager/pager.component';
+import { ClientDetailsComponent } from './client-details/client-details.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { ConfirmationWindowComponent } from './confirmation-window/confirmation-window.component';
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 
 @NgModule({
@@ -28,7 +32,11 @@ import { PagerComponent } from './shared/pager/pager.component';
     AgreementListComponent,
     ClientFormComponent,
     AgreementFormComponent,
-    PagerComponent
+    PagerComponent,
+    ClientDetailsComponent,
+    CalendarComponent,
+    ConfirmationWindowComponent,
+    EditFormComponent
   ],
   imports: [
     BrowserModule,
@@ -39,12 +47,14 @@ import { PagerComponent } from './shared/pager/pager.component';
     DigitOnlyModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbModalModule
   ],
   providers: [
     ClientService,
     AgreementService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationWindowComponent]
 })
 export class AppModule { }
