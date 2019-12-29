@@ -13,6 +13,8 @@ import {
 import { CalendarService } from './calendar.service';
 import { ThrowStmt } from '@angular/compiler';
 import { Event} from './event.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 
 @Component({
   selector: 'app-calendar',
@@ -77,7 +79,7 @@ export class CalendarComponent implements OnInit {
       console.log('Dropped or resized', event);
     }
 
-  constructor(private calendarSevice: CalendarService) { }
+  constructor(private calendarSevice: CalendarService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getEventByMonth();
@@ -108,6 +110,10 @@ export class CalendarComponent implements OnInit {
 
   getEventByMonth(){
     this.calendarSevice.getEvents(this.viewDate.getFullYear(), this.viewDate.getMonth()).subscribe((res)=>this.convertEvents(res));
+  }
+
+  openAdd(){
+    const modalRef =this.modalService.open(CalendarFormComponent);
   }
 
 }

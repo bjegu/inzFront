@@ -6,6 +6,7 @@ import { ClientFormComponent } from './client-form/client-form.component';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'agreementList', component:AgreementListComponent},
   {path: 'addClient', component:ClientFormComponent},
   {path: 'addAgreement', component:AgreementFormComponent},
-  {path: 'calendar', component:CalendarComponent}
+  {path: 'calendar', component:CalendarComponent},
+  {path: 'addEvent', component:CalendarFormComponent}
 ];
  
 @NgModule({

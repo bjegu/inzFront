@@ -14,7 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 
-import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule, NgbActiveModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule, NgbActiveModal, NgbModalModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
 import { PagerComponent } from './shared/pager/pager.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
@@ -24,6 +24,7 @@ import { EditFormComponent } from './edit-form/edit-form.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalednarDatePickerComponent } from './calendar/calendar-date-picker/calednar-date-picker.component';
+import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CalednarDatePickerComponent } from './calendar/calendar-date-picker/cal
     CalendarComponent,
     ConfirmationWindowComponent,
     EditFormComponent,
-    CalednarDatePickerComponent
+    CalednarDatePickerComponent,
+    CalendarFormComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -53,6 +55,7 @@ import { CalednarDatePickerComponent } from './calendar/calendar-date-picker/cal
     NgbTypeaheadModule,
     NgbDatepickerModule,
     NgbModalModule,
+    NgbTimepickerModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [
