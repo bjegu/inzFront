@@ -16,6 +16,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 
 import {NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgreementFormComponent } from './agreement-form/agreement-form.component';
+import { PagerComponent } from './shared/pager/pager.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AgreementFormComponent } from './agreement-form/agreement-form.componen
     AgreementComponent,
     AgreementListComponent,
     ClientFormComponent,
-    AgreementFormComponent
+    AgreementFormComponent,
+    PagerComponent
   ],
   imports: [
     BrowserModule,

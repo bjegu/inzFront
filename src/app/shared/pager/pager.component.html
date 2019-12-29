@@ -1,0 +1,3 @@
+<button [disabled]="page == 1" (click)="previous()"><i class="fas fa-chevron-left"></i></button>
+<span>{{page}}</span>
+<button [disabled]="page == max" (click)="next()"><i class="fas fa-chevron-right"></i></button>

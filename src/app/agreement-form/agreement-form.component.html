@@ -15,7 +15,10 @@
             [ngbTypeahead]="searchType"
             [inputFormatter]="typeFormatter"
             [resultFormatter]="typeFormatter"
-            [editable]='false'>
+            [editable]='false'
+            (focus)="focus$.next($event.target.value)"
+            (click)="click$.next($event.target.value)"
+            #instance="ngbTypeahead">
         </label>
 
         <label>
@@ -25,7 +28,7 @@
                 <input class="form-control" placeholder="yyyy-mm-dd"
                        name="dp" formControlName="start" ngbDatepicker #ds="ngbDatepicker">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" (click)="ds.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                  <button class="btn btn-outline-primary" (click)="ds.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
                 </div>
               </div>
         </label>
@@ -37,7 +40,7 @@
                 <input class="form-control" placeholder="yyyy-mm-dd"
                        name="dp" formControlName="end" ngbDatepicker #de="ngbDatepicker">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" (click)="de.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
+                  <button class="btn btn-outline-primary" (click)="de.toggle()" type="button"><i class="far fa-calendar-alt"></i></button>
                 </div>
               </div>
         </label>
@@ -57,7 +60,7 @@
         </label>
     </div>  
 
-        <button type="submit" > SUBMIT </button>
+        <button type="submit" class="btn btn-primary"> SUBMIT </button>
 
     </form>
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Agreement, AgreementType } from './agreement.model';
 import { Observable } from 'rxjs';
+import { Page } from '../shared/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ export class AgreementService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAgreement():Observable<Agreement[]>{
-    return this.httpClient.get<Agreement[]>('http://localhost:4200/api/agreement/')
+  getAgreement(page: number):Observable<Page<Agreement>>{
+    const params = new HttpParams().set('page', String(Number(page)-1))
+    return this.httpClient.get<Page<Agreement>>('http://localhost:4200/api/agreement/', {params})
   }
 
   postAgreement(agreement:Agreement):Observable<Agreement>{

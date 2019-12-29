@@ -1,0 +1,15 @@
+@import './src/_vars.scss';
+
+:host {
+  display: inline-block;
+  border: lightgray 1px solid;
+  button {
+    background-color: $base-color;
+    color: white;
+    border-radius: 2px;
+    border: lightgray 1px solid;
+  }
+  span {
+      padding: 0 5px;
+  }
+}
