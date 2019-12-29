@@ -1,6 +1,6 @@
 <div><b>Client details:</b></div>
 
-<div *ngIf="client">
+<div *ngIf="client && !isEdited">
     
     <div class="row">
         <div class="col-1">First Name:</div>
@@ -46,16 +46,25 @@
             <div class="col-2"> City:  {{address.city}}</div>
             <div class="col-2"> Postal code:  {{address.postalCode}}</div>
         </div>
-        <div class="row">
-            <div class="col-12">  </div>
-        </div>
-    </div>
 
-    <button type="button" class="btn btn-danger" (click)="deleteClient()">
+    </div>
+<div class="row buttons">
+    <div class="col-4">
+    <button type="button" class="btn btn-danger" (click)="open()">
         Delete client
     </button>
     <button type="button" class="btn btn-default" routerLink="/clientList" routerLinkActive="active">
         Go back
     </button>
+</div>
+<div class="col-6"></div>
+<div class="col-2">
+    <button type="button" class="btn btn-info" (click)="isEdited=true">Edit a client</button>
+</div>
+</div>
+</div>
+
+<div *ngIf="client && isEdited">
+    <app-client-form [input]="client"></app-client-form>
 </div>
 

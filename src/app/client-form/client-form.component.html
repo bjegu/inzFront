@@ -3,19 +3,19 @@
 </div>
 
 <div>
-    <input type="radio" [(ngModel)]="radioSelected" name="clientType" value="Individual"
+    <input type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="individual"
         (change)="changeType(radioSelected)" />
     <label>Individual client</label>
 </div>
 <div>
-    <input type="radio" [(ngModel)]="radioSelected" name="clientType" value="Company"
+    <input type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="company"
         (change)="changeType(radioSelected)" />
     <label>Business client</label>
 </div>
 
 <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
 
-    <div *ngIf="radioSelected=='Individual'">
+    <div *ngIf="radioSelected==individual">
 
         <label>
             First name:
@@ -53,7 +53,7 @@
 
     </div>
 
-    <div *ngIf="radioSelected=='Company'">
+    <div *ngIf="radioSelected==company">
         <label>
             Company name:
             <input type="text" formControlName="compName">
