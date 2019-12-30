@@ -7,16 +7,19 @@
     </div>
   </form>
 
-<app-agreement [agreement]="agreement" *ngFor="let agreement of agreementList">
+<!-- <app-agreement [agreement]="agreement" *ngFor="let agreement of agreementList">
     <p>
         {{agreement.agreementNo}}
     </p>
-</app-agreement>
+</app-agreement> -->
 
 <table class="table table-bordered table-striped">
     <tr>
         <td>
             Agreement number
+        </td>
+        <td>
+            Client
         </td>
         <td>
             Start date
@@ -25,12 +28,18 @@
             End date
         </td>
         <td>
-            Is the agreement active?
+            Additional info
         </td>
         <td>
-            Client - co tutaj dodać?
+            Agreement type
         </td>
+        
     </tr>
+
+<tr app-agreement [agreement]="agreement" *ngFor="let agreement of agreementList" (refresh)="refresh()">
+
+</tr>
+
 </table>
 
 <app-pager page="1" [max]="totalPages" (change)="changePage($event)"></app-pager>

@@ -12,6 +12,7 @@ export class AgreementListComponent implements OnInit {
 
   agreementList: Agreement[] = [];
   totalPages: number;
+  page = 1;
 
   constructor(private agreementService: AgreementService) { }
 
@@ -26,7 +27,12 @@ export class AgreementListComponent implements OnInit {
 
   changePage(page: number){
     console.log(page);
+    this.page = page;
     this.agreementService.getAgreement(page).subscribe(response => this.fetchData(response))
+  }
+
+  refresh(){
+  this.changePage(this.page);
   }
   
 }

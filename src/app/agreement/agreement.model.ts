@@ -1,3 +1,4 @@
+import { Client } from '../client/client.model';
 
 export interface Agreement{
     uuid: string;
@@ -6,6 +7,8 @@ export interface Agreement{
     start: string;
     active: boolean;
     additional?: string;
+    agreementType: AgreementType;
+    client: Client;
 }
 
 export interface AgreementType{

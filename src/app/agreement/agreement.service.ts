@@ -16,15 +16,15 @@ export class AgreementService {
 
   getAgreement(page: number):Observable<Page<Agreement>>{
     const params = new HttpParams().set('page', String(Number(page)-1))
-    return this.httpClient.get<Page<Agreement>>('http://localhost:4200/api/agreement/', {params})
+    return this.httpClient.get<Page<Agreement>>(this.apiGeneral+this.agreementSuffix, {params})
   }
 
   postAgreement(agreement:Agreement):Observable<Agreement>{
     return this.httpClient.post<Agreement>(this.apiGeneral+this.agreementSuffix, agreement);
   }
 
-  deleteAgreement():Observable<Agreement>{
-    return this.httpClient.delete<Agreement>('http://localhost:4200/api/agreement/delete/{id}')
+  deleteAgreement(id: String):Observable<Agreement>{
+    return this.httpClient.delete<Agreement>(this.apiGeneral+this.agreementSuffix+'delete/'+id)
   }
 
   getAgreementType():Observable<AgreementType[]>{
