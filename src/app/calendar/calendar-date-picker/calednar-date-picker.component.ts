@@ -7,48 +7,62 @@ import { addMonths } from 'date-fns';
   templateUrl: './calednar-date-picker.component.html',
   styleUrls: ['./calednar-date-picker.component.scss']
 })
-export class CalednarDatePickerComponent implements OnInit  {
+export class CalednarDatePickerComponent implements OnInit {
 
   @Output()
   dayChange = new EventEmitter();
 
-  day: {year,month,day};
+  day: { year, month, day };
   selectedMonth: string;
-  
+
 
   constructor() { }
 
   ngOnInit() {
+    this.setOnToday()
+  }
+  setOnToday(){
     const today = new Date()
     this.day = {
       year: today.getFullYear(),
-      month: today.getMonth()+1,
+      month: today.getMonth() + 1,
       day: 1
     }
     this.selectedMonth = this.prepareMonthString(this.day.month)
   }
-
-  emit(event:{year,month,day}){
-    this.selectedMonth = this.prepareMonthString(event.month)
-    this.dayChange.emit(new Date(event.year+"-"+event.month+"-"+event.day));
+  setOnTodayWithEmit(){
+    this.setOnToday()
+    this.emit();
   }
 
-  nextMonth(){
+  emit() {
+    this.selectedMonth = this.prepareMonthString(this.day.month)
+    this.dayChange.emit(new Date(this.day.year + "-" + this.day.month + "-" + this.day.day));
+  }
+
+  nextMonth() {
+    this.dayChange.emit(this.addMonth(1));
+    this.selectedMonth = this.prepareMonthString(this.day.month)
+  }
+
+  previousMonth() {
+    this.dayChange.emit(this.addMonth(-1));
+    this.selectedMonth = this.prepareMonthString(this.day.month)
+  }
+
+  addMonth(amount: number): Date {
+    const newDate = addMonths(new Date(this.day.year + "-" + this.day.month + "-" + this.day.day), amount);
     this.day = {
-        year: this.day.year,
-        month: addMonths(this.day.month, 1).getMonth(),
-        day: this.day.day
+      year: newDate.getFullYear(),
+      month: newDate.getMonth()+1,
+      day: this.day.day
     }
-    console.log(this.day)
+    return newDate;
   }
 
-  previousMonth(){
-    this.day.month = addMonths(this.day.month, -1).getMonth()
-  }
-
-  prepareMonthString(month: number){
+  prepareMonthString(month: number) {
     const mL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return mL[month-1]
+    return mL[month - 1]
   }
 
 }

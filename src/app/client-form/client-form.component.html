@@ -1,16 +1,17 @@
-<div class="row">
+<div class="form-group">
     Choose the type of a client:
-</div>
-
-<div>
-    <input type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="individual"
-        (change)="changeType(radioSelected)" />
-    <label>Individual client</label>
-</div>
-<div>
-    <input type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="company"
-        (change)="changeType(radioSelected)" />
-    <label>Business client</label>
+    <div class="input-group">    
+        <div>
+            <input id="rId" type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="individual"
+                (change)="changeType(radioSelected)" />
+            <label for="rId">Individual client</label>
+        </div>
+        <div class="ml-2">
+            <input id="rBu" type="radio" [(ngModel)]="radioSelected" name="clientType" [value]="company"
+                (change)="changeType(radioSelected)" />
+            <label for="rBu">Business client</label>
+        </div>
+    </div>
 </div>
 
 <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
@@ -31,23 +32,22 @@
             Last name:
             <input type="text" formControlName="surname" required>
             <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="alert alert-danger">
-                    <div *ngIf="surname.errors.required">
-                        Last name is required.
-                    </div>
+                <div *ngIf="surname.errors.required">
+                    Last name is required.
                 </div>
+            </div>
         </label>
 
         <label>
             Pesel:
             <input type="text" digitOnly formControlName="pesel" pattern="[0-9]{11}">
-            <div *ngIf="pesel.invalid && (pesel.dirty || pesel.touched)"
-            class="alert alert-danger">
+            <div *ngIf="pesel.invalid && (pesel.dirty || pesel.touched)" class="alert alert-danger">
                 <div *ngIf="pesel.errors.minlength">
                     Pesel must be 11 characters long.
                 </div>
                 <div *ngIf="pesel.errors.maxlength">
-                        Pesel must be 11 characters long.
-                    </div>
+                    Pesel must be 11 characters long.
+                </div>
             </div>
         </label>
 
@@ -62,30 +62,30 @@
             Regon:
             <input type="text" digitOnly formControlName="regon">
             <div *ngIf="regon.invalid && (regon.dirty || regon.touched)" class="alert alert-danger">
-                    <div *ngIf="regon.errors.regonLength">
-                        Regon must be 9 or 14 characters long.
-                    </div>
+                <div *ngIf="regon.errors.regonLength">
+                    Regon must be 9 or 14 characters long.
                 </div>
+            </div>
         </label>
 
         <label>
             First name:
             <input type="text" formControlName="name" required>
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                    <div *ngIf="name.errors.required">
-                        Name is required.
-                    </div>
+                <div *ngIf="name.errors.required">
+                    Name is required.
                 </div>
+            </div>
         </label>
 
         <label>
             Last name:
             <input type="text" formControlName="surname" required>
             <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="alert alert-danger">
-                    <div *ngIf="surname.errors.required">
-                        Last name is required.
-                    </div>
+                <div *ngIf="surname.errors.required">
+                    Last name is required.
                 </div>
+            </div>
         </label>
 
     </div>
@@ -94,9 +94,9 @@
         Email:
         <input type="text" formControlName="email">
         <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-                <div *ngIf="email.errors.email">
-                    Not appropiate email address.
-                </div>
+            <div *ngIf="email.errors.email">
+                Not appropiate email address.
+            </div>
         </div>
     </label>
 
@@ -150,13 +150,13 @@
         </div>
     </div>
 
-    <div class="row"  *ngIf="showMsg">
+    <div class="row" *ngIf="showMsg">
         <div class="col-xs-12">
-          <p class="alert alert-success">
-              Data submitted successfully!
-          </p>
+            <p class="alert alert-success">
+                Data submitted successfully!
+            </p>
+        </div>
     </div>
-</div>
 
     <button type="submit" [disabled]="!customerForm.valid"> SUBMIT </button>
 

@@ -9,7 +9,7 @@
             <input class="form-control" type = "text" formControlName="agreementNo">
         </label>
 
-        <label>
+        <!-- <label>
             Agreement Type
             <input class="form-control" type = "text" formControlName="agreement_type"
             [ngbTypeahead]="searchType"
@@ -19,6 +19,12 @@
             (focus)="focus$.next($event.target.value)"
             (click)="click$.next($event.target.value)"
             #instance="ngbTypeahead">
+        </label> -->
+        <label>
+            Agreement Type
+            <select class="form-control" formControlName="agreement_type">
+                <option *ngFor="let type of types" [ngValue]="type">{{type.agrName}}</option>
+            </select>
         </label>
 
         <label>

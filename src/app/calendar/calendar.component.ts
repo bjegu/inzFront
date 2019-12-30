@@ -11,8 +11,7 @@ import {
   addHours
 } from 'date-fns';
 import { CalendarService } from './calendar.service';
-import { ThrowStmt } from '@angular/compiler';
-import { Event} from './event.model';
+import { Event } from './event.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 
@@ -32,7 +31,7 @@ export class CalendarComponent implements OnInit {
       start: new Date(),
       end: addDays(new Date(), 1),
       title: 'Testevent',
-      color:  {
+      color: {
         primary: '#ad2121',
         secondary: '#FAE3E3'
       },
@@ -47,37 +46,40 @@ export class CalendarComponent implements OnInit {
   ];
   activeDayIsOpen: boolean = true;
 
-    dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-      if (isSameMonth(date, this.viewDate)) {
-        if (
-          (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-          events.length === 0
-        ) {
-          this.activeDayIsOpen = false;
-        } else {
-          this.activeDayIsOpen = true;
-        }
-        this.viewDate = date;
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
       }
+      this.viewDate = date;
     }
+  }
 
-    eventTimesChanged({
-      event,
-      newStart,
-      newEnd
-    }: CalendarEventTimesChangedEvent): void {
-      this.events = this.events.map(iEvent => {
-        if (iEvent === event) {
-          return {
-            ...event,
-            start: newStart,
-            end: newEnd
-          };
-        }
-        return iEvent;
-      });
-      console.log('Dropped or resized', event);
-    }
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map(iEvent => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd
+        };
+      }
+      return iEvent;
+    });
+    let toSaveEvent = (event['orignalEvent'] as Event);
+    toSaveEvent.start = newStart.toJSON()
+    toSaveEvent.finish = newEnd.toJSON()
+    this.calendarSevice.postEvent(toSaveEvent).subscribe(res => console.log(res))
+  }
 
   constructor(private calendarSevice: CalendarService, private modalService: NgbModal) { }
 
@@ -85,15 +87,15 @@ export class CalendarComponent implements OnInit {
     this.getEventByMonth();
   }
 
-  convertEvents(events: Event[]){
-    this.events=[];
-    this.eventsList=events;
+  convertEvents(events: Event[]) {
+    this.events = [];
+    this.eventsList = events;
     events.forEach(element => {
       this.events.push({
         start: new Date(element.start),
         end: new Date(element.finish),
-        title: element.name+element.eventType.eventTypeName,
-        color:  {
+        title: element.name + element.eventType.eventTypeName,
+        color: {
           primary: '#ad2121',
           secondary: '#FAE3E3'
         },
@@ -103,17 +105,19 @@ export class CalendarComponent implements OnInit {
           beforeStart: true,
           afterEnd: true
         },
-        draggable: true
-      })
+        draggable: true,
+        orignalEvent: element
+      } as CalendarEvent)
     });
   }
 
-  getEventByMonth(){
-    this.calendarSevice.getEvents(this.viewDate.getFullYear(), this.viewDate.getMonth()).subscribe((res)=>this.convertEvents(res));
+  getEventByMonth() {
+    this.calendarSevice.getEvents(this.viewDate.getFullYear(), this.viewDate.getMonth()).subscribe((res) => this.convertEvents(res));
   }
 
-  openAdd(){
-    const modalRef =this.modalService.open(CalendarFormComponent);
+  openAdd() {
+    const modalRef = this.modalService.open(CalendarFormComponent);
+    modalRef.result.then(() => this.getEventByMonth()).catch(() => { })
   }
 
 }

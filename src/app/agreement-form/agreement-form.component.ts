@@ -20,9 +20,9 @@ export class AgreementFormComponent implements OnInit {
   agreementForm: FormGroup;
   types: AgreementType[] = [];
 
-  @ViewChild('instance', {static: true}) instance: NgbTypeahead;
-  focus$ = new Subject<string>();
-  click$ = new Subject<string>();
+  // @ViewChild('instance', {static: true}) instance: NgbTypeahead;
+  // focus$ = new Subject<string>();
+  // click$ = new Subject<string>();
 
   constructor(private fb: FormBuilder, private agreementService: AgreementService, private clientService: ClientService, private router: Router) { }
 
@@ -53,15 +53,15 @@ export class AgreementFormComponent implements OnInit {
     )
   clientFormatter = (client: Client) => (client) ? client.name + ' ' + client.surname : ""
 
-  searchType = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
+  // searchType = (text$: Observable<string>) => {
+  //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+  //   const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+  //   const inputFocus$ = this.focus$;
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => this.types.filter(type => type.agrName.includes(term)).slice(0, 10))
-    )};
+  //   return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+  //     map(term => this.types.filter(type => type.agrName.includes(term)).slice(0, 10))
+  //   )};
   
-  typeFormatter = (type: AgreementType) => type ? type.agrName : ""
+  // typeFormatter = (type: AgreementType) => type ? type.agrName : ""
 
 }

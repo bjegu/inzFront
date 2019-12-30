@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { EventType } from '../event.model';
+import { CalendarService } from '../calendar.service';
+import { StringUtils } from 'src/app/shared/string.utils';
 
 @Component({
   selector: 'app-calendar-form',
@@ -11,26 +14,38 @@ import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-boo
 export class CalendarFormComponent implements OnInit {
 
   eventForm: FormGroup;
+  types: EventType[] = [];
 
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  constructor(public modal: NgbActiveModal, private fb: FormBuilder, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) { 
+  constructor(private calendarService: CalendarService, public modal: NgbActiveModal, private fb: FormBuilder, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
 
   ngOnInit() {
-    this.eventForm=this.fb.group({
-      name:[''],
-      description:[''],
-      startDay:[this.fromDate],
-      startTime:[''],
-      finishDay:[this.toDate],
-      finishTime:[''],
-      eventType:['']
+    this.calendarService.getTypes().subscribe(res => this.types = res);
+    this.eventForm = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      startDay: [this.fromDate, Validators.required],
+      startTime: ['', Validators.required],
+      finishDay: [this.toDate, Validators.required],
+      finishTime: ['', Validators.required],
+      start: [''],
+      finish: [''],
+      eventType: ['', Validators.required]
     })
+  }
+
+  onSubmit() {
+    this.eventForm.patchValue({
+      start: StringUtils.convertDateTime(this.eventForm.get('startDay').value, this.eventForm.get('startTime').value),
+      finish: StringUtils.convertDateTime(this.eventForm.get('finishDay').value, this.eventForm.get('finishTime').value)
+    });
+    this.calendarService.postEvent(this.eventForm.value).subscribe(res => this.modal.close(res))
   }
 
   onDateSelection(date: NgbDate) {
@@ -43,7 +58,7 @@ export class CalendarFormComponent implements OnInit {
       this.fromDate = date;
     }
   }
-  
+
   isHovered(date: NgbDate) {
     return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
   }
