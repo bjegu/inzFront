@@ -1,8 +1,11 @@
 <form>
     <div class="form-group">
       <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-        <input type="text" class="form-control" placeholder="Search the agreement" ng-model="searchAgreement">
+        <input type="text" 
+        class="form-control" placeholder="Search the agreement" 
+        [(ngModel)]="searchAgreement"
+        (keyup.enter)="getAgreementsData()">
+        <div class="input-group-append"><button class="btn btn-primary" (click)="getAgreementsData()"><i class="fa fa-search"></i></button></div>
       </div>      
     </div>
   </form>
