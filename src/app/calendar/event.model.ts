@@ -7,6 +7,7 @@ export interface Event {
     name: string;
     description?: string;
     eventType: EventType;
+    eventClients: EventClients[]
 }
 
 export interface EventType {
