@@ -15,5 +15,10 @@ export class StringUtils {
         return value < 10 ? '0' + value : '' + value
     }
 
+    public static showTime(dateString: string) {
+        const date = new Date(dateString)
+        return this.leadingZero(date.getHours()) + ':' + this.leadingZero( date.getMinutes())
+    }
+
 
 }

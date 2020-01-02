@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { EventType } from '../event.model';
 import { CalendarService } from '../calendar.service';
 import { StringUtils } from 'src/app/shared/string.utils';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Client } from 'src/app/client/client.model';
+import { ClientService } from 'src/app/client/client.service';
 
 @Component({
   selector: 'app-calendar-form',
@@ -20,7 +24,7 @@ export class CalendarFormComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  constructor(private calendarService: CalendarService, public modal: NgbActiveModal, private fb: FormBuilder, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
+  constructor(private calendarService: CalendarService, private clientService: ClientService, public modal: NgbActiveModal, private fb: FormBuilder, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
@@ -36,7 +40,10 @@ export class CalendarFormComponent implements OnInit {
       finishTime: ['', Validators.required],
       start: [''],
       finish: [''],
-      eventType: ['', Validators.required]
+      eventType: ['', Validators.required],
+      contact: [''],
+      contactPhone: [''],
+      eventClients: this.fb.array([])
     })
   }
 
@@ -45,6 +52,12 @@ export class CalendarFormComponent implements OnInit {
       start: StringUtils.convertDateTime(this.eventForm.get('startDay').value, this.eventForm.get('startTime').value),
       finish: StringUtils.convertDateTime(this.eventForm.get('finishDay').value, this.eventForm.get('finishTime').value)
     });
+    const contact = this.eventForm.get('contact').value;
+    (this.eventForm.controls.eventClients as FormArray).push(this.fb.group({
+      name: [this.isClient() ? contact.name + ' ' + contact.surname : contact],
+      phone: [this.isClient() ? contact.phone : this.eventForm.get('contactPhone').value],
+      client: [this.isClient() ? contact : null]
+    }))
     this.calendarService.postEvent(this.eventForm.value).subscribe(res => this.modal.close(res))
   }
 
@@ -76,4 +89,23 @@ export class CalendarFormComponent implements OnInit {
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
+  searchClient = (text$: Observable<string>) => text$
+    .pipe(
+      switchMap(text => this.clientService.getClients('name', false, text)),
+    )
+  clientFormatter = (client: Client) => (client) ? client.name + ' ' + client.surname : ""
+
+  getClient() {
+    return JSON.stringify(this.eventForm.get('contact').value)
+  }
+  isClient() {
+    return typeof this.eventForm.get('contact').value !== 'string'
+  }
+
+  unlink() {
+    if (this.isClient()) {
+      const contactControl = this.eventForm.get('contact');
+      contactControl.setValue(contactControl.value.name + ' ' + contactControl.value.surname)
+    }
+  }
 }

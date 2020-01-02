@@ -14,6 +14,7 @@ import { CalendarService } from './calendar.service';
 import { Event } from './event.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
+import { StringUtils } from '../shared/string.utils';
 
 @Component({
   selector: 'app-calendar',
@@ -94,7 +95,7 @@ export class CalendarComponent implements OnInit {
       this.events.push({
         start: new Date(element.start),
         end: new Date(element.finish),
-        title: element.name + element.eventType.eventTypeName,
+        title: this.prepareEventLabel(element),
         color: {
           primary: '#ad2121',
           secondary: '#FAE3E3'
@@ -109,6 +110,17 @@ export class CalendarComponent implements OnInit {
         orignalEvent: element
       } as CalendarEvent)
     });
+  }
+
+  prepareEventLabel(event: Event): string {
+    
+    return event.name + ' ' + event.eventType.eventTypeName + ' start: ' + StringUtils.showTime(event.start) + this.getClientsLabel(event)
+  }
+
+  getClientsLabel(event: Event): string {
+    const client = event.eventClients[0]
+    const isClient = !!client;
+    return (isClient) ? ' with: ' + client.name : '';
   }
 
   getEventByMonth() {
