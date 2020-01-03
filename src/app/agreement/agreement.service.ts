@@ -3,13 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Agreement, AgreementType } from './agreement.model';
 import { Observable } from 'rxjs';
 import { Page } from '../shared/page.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgreementService {
 
-  apiGeneral ='http://localhost:4200/api/';
+  apiGeneral = environment.apiUrl;
   agreementSuffix = 'agreement/';
 
   constructor(private httpClient: HttpClient) { }
@@ -28,7 +29,7 @@ export class AgreementService {
   }
 
   getAgreementType():Observable<AgreementType[]>{
-    return this.httpClient.get<AgreementType[]>('http://localhost:4200/api/agrtype/showall')
+    return this.httpClient.get<AgreementType[]>(this.apiGeneral+'agrtype/showall')
   }
 
 }
