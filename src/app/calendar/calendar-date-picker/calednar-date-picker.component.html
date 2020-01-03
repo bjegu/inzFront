@@ -1,0 +1,18 @@
+<form class="form-inline">
+  <div class="form-group">
+    <div class="input-group">
+      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="day" (ngModelChange)="emit()"
+        ngbDatepicker #d="ngbDatepicker" hidden>
+
+      <div class="input-group-append">
+        <button (click)="previousMonth()"><i class="fas fa-chevron-left"></i></button>
+        <button class="btn btn-outline-secondary" (click)="d.toggle()"
+          type="button"><span>{{selectedMonth}}</span></button>
+        <button (click)="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-primary ml-5" (click)="setOnTodayWithEmit()"><span>TODAY</span></button>
+    </div>
+  </div>
+</form>

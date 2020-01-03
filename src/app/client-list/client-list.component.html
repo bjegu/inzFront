@@ -1,11 +1,11 @@
 
     <div class="form-group">
       <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
         <input type="text" 
         class="form-control" placeholder="Search the client" 
         [(ngModel)]="searchClient"
         (keyup.enter)="getClientsData()">
+        <div class="input-group-append"><button class="btn btn-primary" (click)="getClientsData()"><i class="fa fa-search"></i></button></div>
       </div>      
     </div>
 {{searchClient}}
@@ -48,7 +48,7 @@
         </tr>
     
 
-<tr app-client [client]="client" *ngFor="let client of clientList">
+<tr app-client [client]="client" *ngFor="let client of clientList" (click)="getDetails(client)">
 
 </tr> 
 

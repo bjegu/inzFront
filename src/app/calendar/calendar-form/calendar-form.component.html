@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Add a new event</h4>
+  <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <!-- <label> -->
+    Event name:
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" type="text" formControlName="name" required>
+      </div>
+    </div>
+    <!-- </label>
+    <label> -->
+    Event description:
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" type="text" formControlName="description">
+      </div>
+    </div>
+    <!-- </label>
+      <label> -->
+    Event Type
+    <div class="form-group">
+      <select class="form-control" formControlName="eventType">
+        <option *ngFor="let type of types" [ngValue]="type">{{type.eventTypeName}}</option>
+      </select>
+    </div>
+    <!-- </label>
+    <label> -->
+    Start Date:
+    <div class="form-group">
+      <div class="input-group">
+        <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+          [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" (click)="datepicker.toggle()" type="button"><i
+              class="far fa-calendar-alt"></i></button>
+        </div>
+        <ngb-timepicker class="ml-2" formControlName="startTime" [spinners]="false"></ngb-timepicker>
+      </div>
+    </div>
+    End Date:
+    <div class="form-group">
+      <div class="input-group">
+        <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+          [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" (click)="datepicker.toggle()" type="button"><i
+              class="far fa-calendar-alt"></i></button>
+        </div>
+        <ngb-timepicker class="ml-2" formControlName="finishTime" [spinners]="false"></ngb-timepicker>
+      </div>
+    </div>
+    <div>
+      <div>
+        <input name="datepicker" class="form-control no-display" ngbDatepicker #datepicker="ngbDatepicker"
+          [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+          outsideDays="hidden" [startDate]="fromDate">
+        <ng-template #t let-date let-focused="focused">
+          <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+            [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+            (mouseleave)="hoveredDate = null">
+            {{ date.day }}
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <!-- </label> -->
+    Contact Person
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" type="text" formControlName="contact" [ngbTypeahead]="searchClient"
+          [inputFormatter]="clientFormatter" [resultFormatter]="clientFormatter" [editable]='true'>
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary no-btn" [disabled]="!isClient()" type="button"><i class="fas fa-link"></i></button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isClient()">
+      Contact Phone
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" type="text" formControlName="contactPhone">
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')"> Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Add an event</button>
+  </div>
+</form>

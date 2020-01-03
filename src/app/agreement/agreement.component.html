@@ -1,4 +1,11 @@
-<p>agreement works!</p>
 
-<p>tu powinno być object : </p>
-<h3>{{agreement.agreementNo}} to numer umowy</h3>
+
+<td>{{agreement.agreementNo}}</td>
+<td>{{agreement.client.name}} {{agreement.client.surname}}</td>
+<td>{{agreement.start}}</td>
+<td>{{agreement.end}}</td>
+<td>{{agreement.additional}}</td>
+<td>{{agreement.agreementType.agrName}}</td>
+<td>
+    <button type="button" class="btn btn-danger" (click)="deleteAgreement(agreement.uuid)">Delete</button>
+</td>

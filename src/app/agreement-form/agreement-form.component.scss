@@ -1,0 +1,8 @@
+:host{
+    label{
+        margin-right: 10px;
+        &:nth-last-of-type(){
+            margin-right: unset;
+        }
+    }
+}

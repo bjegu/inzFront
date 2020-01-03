@@ -3,3 +3,15 @@
     color:#007bff !important;
     cursor: pointer
 }
+
+svg{
+    width: calc(100% - 20px);
+    position: absolute;
+    top: 0;
+    z-index: -999;
+    opacity: 0.5;
+}
+
+.no-display {
+    display: none;
+  }

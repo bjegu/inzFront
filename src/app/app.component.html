@@ -1,26 +1,27 @@
 <h1>Fajna apka</h1>
 
 
-<div class="row" *ngIf="!showLoginPage()">
+<div class="row app-content" *ngIf="!showLoginPage()">
   <div class="col-2">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a *ngIf="isAdmin()" routerLink="/clientList" routerLinkActive="active" class="nav-link">List of Clients  </a>
-        <a *ngIf="isAdmin()" routerLink="/addClient" routerLinkActive="active" class="nav-link">Add a client</a> 
-        <a routerLink="/agreementList" routerLinkActive="active" class="nav-link">List of Agreements</a> 
+        <a *ngIf="isAdmin()" routerLink="/addClient" routerLinkActive="active" class="nav-link">Add a client</a>
+        <a routerLink="/agreementList" routerLinkActive="active" class="nav-link">List of Agreements</a>
         <a *ngIf="isAdmin()" routerLink="/addAgreement" routerLinkActive="active" class="nav-link">Add an agreement</a>
-        <a (click)="logout()" class="nav-link no-link">Logout</a>  
+        <a *ngIf="isAdmin()" routerLink="/calendar" routerLinkActive="active" class="nav-link">Calendar</a>
+        <a (click)="logout()" class="nav-link no-link">Logout</a>
       </div>
   </div>
 
   <div class="col-10">
-      
-          <router-outlet></router-outlet>  
+
+          <router-outlet></router-outlet>
   </div>
 </div>
 <app-login-form *ngIf="showLoginPage()"></app-login-form>
 
   <footer>
-  
+
   </footer>
 
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Client } from './client.model';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  apiGeneral ='http://localhost:4200/api/';
+  apiGeneral = environment.apiUrl;
   clientSuffix = 'client/';
 
   constructor(private httpClient: HttpClient) { }
@@ -25,5 +26,13 @@ export class ClientService {
 
   postClient(client: Client):Observable<Client>{
     return this.httpClient.post<Client>(this.apiGeneral+this.clientSuffix, client)
+  }
+  
+  getClientById(id: String):Observable<Client>{
+    return this.httpClient.get<Client>(this.apiGeneral+this.clientSuffix+id);
+  }
+
+  deleteClient(id: String):Observable<Client>{
+    return this.httpClient.delete<Client>(this.apiGeneral+this.clientSuffix+'delete/'+id);
   }
 }

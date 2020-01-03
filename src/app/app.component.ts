@@ -7,13 +7,10 @@ import { AuthenticationService } from './security/authentication.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title: string;
 
   constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    //what to show while loading
-    this.title = "LOADING :) ";
   }
 
   showLoginPage() {
@@ -27,4 +24,3 @@ export class AppComponent implements OnInit {
     this.authenticationService.logOut();
   }
 }
- 
