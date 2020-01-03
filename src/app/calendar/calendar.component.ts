@@ -26,6 +26,7 @@ export class CalendarComponent implements OnInit {
 
   viewDate: Date = new Date();
   eventsList: Event[];
+  refresh: any;
 
   events: CalendarEvent[] = [
     {
@@ -125,6 +126,10 @@ export class CalendarComponent implements OnInit {
 
   getEventByMonth() {
     this.calendarSevice.getEvents(this.viewDate.getFullYear(), this.viewDate.getMonth()).subscribe((res) => this.convertEvents(res));
+  }
+
+  handleEvent(value: string, event: CalendarEvent){
+
   }
 
   openAdd() {

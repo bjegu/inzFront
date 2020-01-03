@@ -13,6 +13,7 @@ export class AgreementListComponent implements OnInit {
   agreementList: Agreement[] = [];
   totalPages: number;
   page = 1;
+  searchAgreement: string;
 
   constructor(private agreementService: AgreementService) { }
 
@@ -33,6 +34,10 @@ export class AgreementListComponent implements OnInit {
 
   refresh(){
   this.changePage(this.page);
+  }
+
+  getAgreementsData(){
+
   }
   
 }
