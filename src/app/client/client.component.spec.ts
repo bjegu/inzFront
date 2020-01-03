@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientComponent } from './client.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Client } from './client.model';
 
 describe('ClientComponent', () => {
   let component: ClientComponent;
@@ -8,7 +10,8 @@ describe('ClientComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientComponent ]
+      declarations: [ ClientComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
   }));
@@ -16,6 +19,7 @@ describe('ClientComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClientComponent);
     component = fixture.componentInstance;
+    component.client = {} as Client;
     fixture.detectChanges();
   });
 

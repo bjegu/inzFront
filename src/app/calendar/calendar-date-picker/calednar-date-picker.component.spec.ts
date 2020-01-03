@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalednarDatePickerComponent } from './calednar-date-picker.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgModel, FormsModule } from '@angular/forms';
 
 describe('CalednarDatePickerComponent', () => {
   let component: CalednarDatePickerComponent;
@@ -8,7 +10,8 @@ describe('CalednarDatePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalednarDatePickerComponent ]
+      declarations: [ CalednarDatePickerComponent ],
+      imports: [NgbModule, FormsModule]
     })
     .compileComponents();
   }));

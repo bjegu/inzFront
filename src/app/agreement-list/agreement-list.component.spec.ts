@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AgreementListComponent } from './agreement-list.component';
+import { FormsModule } from '@angular/forms';
+import { AgreementComponent } from '../agreement/agreement.component';
+import { PagerComponent } from '../shared/pager/pager.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AgreementListComponent', () => {
   let component: AgreementListComponent;
@@ -8,7 +12,8 @@ describe('AgreementListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgreementListComponent ]
+      declarations: [ AgreementListComponent, AgreementComponent, PagerComponent ],
+      imports: [ FormsModule, HttpClientModule ]
     })
     .compileComponents();
   }));

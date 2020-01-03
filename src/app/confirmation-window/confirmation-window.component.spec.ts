@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmationWindowComponent } from './confirmation-window.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('ConfirmationWindowComponent', () => {
   let component: ConfirmationWindowComponent;
@@ -8,9 +9,10 @@ describe('ConfirmationWindowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmationWindowComponent ]
+      declarations: [ConfirmationWindowComponent],
+      providers: [ NgbActiveModal ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
