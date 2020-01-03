@@ -50,8 +50,7 @@ const httpInterceptorProviders = [
     ConfirmationWindowComponent,
     EditFormComponent,
     CalednarDatePickerComponent,
-    CalendarFormComponent
-    AgreementFormComponent,
+    CalendarFormComponent,
     LoginFormComponent
   ],
   imports: [
