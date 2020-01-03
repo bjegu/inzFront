@@ -33,7 +33,7 @@ export class AgreementFormComponent implements OnInit {
       end: [''],
       additional: [''],
       client: [''],
-      agreement_type: [null],
+      agreementType: [null],
       active: [true]
     })
     this.agreementService.getAgreementType().subscribe(res => this.types = res)
