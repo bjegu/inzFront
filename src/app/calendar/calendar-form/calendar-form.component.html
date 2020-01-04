@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-title">Add a new event</h4>
+  <h4 class="modal-title" id="modal-title">{{modalTitle}}</h4>
   <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -35,10 +35,10 @@
     Start Date:
     <div class="form-group">
       <div class="input-group">
-        <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
-          [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="startDay" ngbDatepicker
+          #ds="ngbDatepicker" [maxDate]="getFinishDay()">
         <div class="input-group-append">
-          <button class="btn btn-outline-primary" (click)="datepicker.toggle()" type="button"><i
+          <button class="btn btn-outline-primary" (click)="ds.toggle()" type="button"><i
               class="far fa-calendar-alt"></i></button>
         </div>
         <ngb-timepicker class="ml-2" formControlName="startTime" [spinners]="false"></ngb-timepicker>
@@ -47,27 +47,13 @@
     End Date:
     <div class="form-group">
       <div class="input-group">
-        <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
-          [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="finishDay" ngbDatepicker
+          #de="ngbDatepicker" [minDate]="getStartDay()">
         <div class="input-group-append">
-          <button class="btn btn-outline-primary" (click)="datepicker.toggle()" type="button"><i
+          <button class="btn btn-outline-primary" (click)="de.toggle()" type="button"><i
               class="far fa-calendar-alt"></i></button>
         </div>
         <ngb-timepicker class="ml-2" formControlName="finishTime" [spinners]="false"></ngb-timepicker>
-      </div>
-    </div>
-    <div>
-      <div>
-        <input name="datepicker" class="form-control no-display" ngbDatepicker #datepicker="ngbDatepicker"
-          [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-          outsideDays="hidden" [startDate]="fromDate">
-        <ng-template #t let-date let-focused="focused">
-          <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-            [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
-            (mouseleave)="hoveredDate = null">
-            {{ date.day }}
-          </span>
-        </ng-template>
       </div>
     </div>
     <!-- </label> -->
@@ -77,23 +63,24 @@
         <input class="form-control" type="text" formControlName="contact" [ngbTypeahead]="searchClient"
           [inputFormatter]="clientFormatter" [resultFormatter]="clientFormatter" [editable]='true'>
         <div class="input-group-append">
-          <button class="btn btn-outline-primary no-btn" [disabled]="!isClient()" type="button"><i class="fas fa-link"></i></button>
+          <button class="btn btn-outline-primary no-btn" [disabled]="!isClient()" type="button"><i
+              class="fas fa-link"></i></button>
         </div>
       </div>
     </div>
     <div *ngIf="!isClient()">
       Contact Phone
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" type="text" formControlName="contactPhone">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" type="text" formControlName="contactPhone">
+        </div>
       </div>
-    </div>
     </div>
 
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')"> Cancel</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Add an event</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">{{modalSubmit}}</button>
   </div>
 </form>
