@@ -6,7 +6,7 @@ import { Event, EventType } from '../event.model';
 import { CalendarService } from '../calendar.service';
 import { StringUtils } from 'src/app/shared/string.utils';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Client } from 'src/app/client/client.model';
 import { ClientService } from 'src/app/client/client.service';
 
@@ -95,7 +95,8 @@ export class CalendarFormComponent implements OnInit {
 
   searchClient = (text$: Observable<string>) => text$
     .pipe(
-      switchMap(text => this.clientService.getClients('name', false, text)),
+      switchMap(text => this.clientService.getClients(0, 'name', false, text)),
+      map(page => page.content)
     )
   clientFormatter = (client: Client) => (client) ? client.name + ' ' + client.surname : ""
 

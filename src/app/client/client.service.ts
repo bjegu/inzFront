@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Client } from './client.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Page } from '../shared/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClients(sortBy: string, sortReverse: boolean, searchClient: string):Observable<Client[] >{
+  getClients(page: number, sortBy: string, sortReverse: boolean, searchClient: string):Observable<Page<Client>>{
     let params;
     if (searchClient!=null) {
-      params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc').set('search', searchClient);
+      params = new HttpParams().set('page', String(page-1)).set('sort', sortBy).set('order', sortReverse?'desc':'asc').set('search', searchClient);
     } else{
-      params = new HttpParams().set('sort', sortBy).set('order', sortReverse?'desc':'asc')
+      params = new HttpParams().set('page', String(page-1)).set('sort', sortBy).set('order', sortReverse?'desc':'asc')
     }
-    return this.httpClient.get<Client[]>(this.apiGeneral+this.clientSuffix,{params})
+    return this.httpClient.get<Page<Client>>(this.apiGeneral+this.clientSuffix,{params})
   }
 
   postClient(client: Client):Observable<Client>{

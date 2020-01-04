@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../client/client.model';
 import { ClientService } from '../client/client.service';
 import { Router } from '@angular/router';
+import { Page } from '../shared/page.model';
 
 
 @Component({
@@ -16,19 +17,28 @@ export class ClientListComponent implements OnInit {
   sortType = 'surname';
   sortReverse = false;
   searchClient: string;
+  totalPages: number;
+  page = 1;
 
   constructor(private clientService: ClientService, private router: Router) { }
 
   ngOnInit() {
-    this.getClientsData();
+    this.changePage(this.page);
   }
 
-  fetchData(clients: Client[]){
-    this.clientList = clients;
+  fetchData(page: Page<Client>){
+    this.clientList = page.content;
+    this.totalPages = page.totalPages
   }
 
-  getClientsData(){
-    this.clientService.getClients(this.sortType, this.sortReverse, this.searchClient).subscribe(res => this.fetchData(res))
+  // getClientsData(){
+  //   this.clientService.getClients(this.sortType, this.sortReverse, this.searchClient).subscribe(res => this.fetchData(res))
+  // }
+
+  changePage(page: number){
+    console.log(page);
+    this.page = page;
+    this.clientService.getClients(page, this.sortType, this.sortReverse, this.searchClient).subscribe(res => this.fetchData(res))
   }
 
   sort(columnName: string){
@@ -36,7 +46,7 @@ export class ClientListComponent implements OnInit {
       this.sortReverse = !this.sortReverse;
     }
     this.sortType = columnName;
-    this.getClientsData();
+    this.changePage(this.page);
   }
 
   getDetails(client:Client): void{
