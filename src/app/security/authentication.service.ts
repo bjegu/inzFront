@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { LoginRequest } from './login-request.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthenticationService {
     jwtPayload: any;
     static ADMIN_PERMISSION = 'ADMIN_PERMISSION'
 
-    apiGeneral = 'http://localhost:4200/api/';
+    apiGeneral = environment.apiUrl;
 
     logIn(request: LoginRequest) {
         return this.httpClient.post<any>(this.apiGeneral + 'login', request, { observe: 'response' })
