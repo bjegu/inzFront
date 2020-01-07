@@ -4,8 +4,8 @@
         <input type="text" 
         class="form-control" placeholder="Search the client" 
         [(ngModel)]="searchClient"
-        (keyup.enter)="getClientsData()">
-        <div class="input-group-append"><button class="btn btn-primary" (click)="getClientsData()"><i class="fa fa-search"></i></button></div>
+        (keyup.enter)="changePage(page)">
+        <div class="input-group-append"><button class="btn btn-primary" (click)="changePage(page)"><i class="fa fa-search"></i></button></div>
       </div>      
     </div>
 {{searchClient}}
@@ -54,3 +54,5 @@
 
 
 </table>
+
+<app-pager page="1" [max]="totalPages" (change)="changePage($event)"></app-pager>

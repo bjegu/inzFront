@@ -49,7 +49,8 @@ export class AgreementFormComponent implements OnInit {
 
   searchClient = (text$: Observable<string>) => text$
     .pipe(
-      switchMap(text => this.clientService.getClients('name', false, text)),
+      switchMap(text => this.clientService.getClients(0, 'name', false, text)),
+      map(page => page.content)
     )
   clientFormatter = (client: Client) => (client) ? client.name + ' ' + client.surname : ""
 

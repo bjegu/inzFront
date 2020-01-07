@@ -129,11 +129,16 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(value: string, event: CalendarEvent){
-
+    this.openModal(event['orignalEvent'])
   }
 
   openAdd() {
+    this.openModal(null)
+  }
+
+  openModal(event: Event){
     const modalRef = this.modalService.open(CalendarFormComponent);
+    modalRef.componentInstance.editedEvent = event;
     modalRef.result.then(() => this.getEventByMonth()).catch(() => { })
   }
 

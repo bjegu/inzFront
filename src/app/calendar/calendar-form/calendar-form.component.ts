@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { EventType } from '../event.model';
+import { Event, EventType } from '../event.model';
 import { CalendarService } from '../calendar.service';
 import { StringUtils } from 'src/app/shared/string.utils';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Client } from 'src/app/client/client.model';
 import { ClientService } from 'src/app/client/client.service';
 
@@ -17,26 +17,31 @@ import { ClientService } from 'src/app/client/client.service';
 })
 export class CalendarFormComponent implements OnInit {
 
+  @Input()
+  public editedEvent: Event;
+
+  modalTitle = 'Add a new event';
+  modalSubmit = 'Add an event';
+
   eventForm: FormGroup;
   types: EventType[] = [];
 
   hoveredDate: NgbDate;
-  fromDate: NgbDate;
-  toDate: NgbDate;
 
   constructor(private calendarService: CalendarService, private clientService: ClientService, public modal: NgbActiveModal, private fb: FormBuilder, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+
   }
 
   ngOnInit() {
-    this.calendarService.getTypes().subscribe(res => this.types = res);
+    let fromDate = this.calendar.getToday();
+    let toDate = this.calendar.getNext(this.calendar.getToday(), 'd', 10);
+    this.calendarService.getTypes().subscribe(res => this.setTypes(res));
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
-      startDay: [this.fromDate, Validators.required],
+      startDay: [fromDate, Validators.required],
       startTime: ['', Validators.required],
-      finishDay: [this.toDate, Validators.required],
+      finishDay: [toDate, Validators.required],
       finishTime: ['', Validators.required],
       start: [''],
       finish: [''],
@@ -45,6 +50,31 @@ export class CalendarFormComponent implements OnInit {
       contactPhone: [''],
       eventClients: this.fb.array([])
     })
+    if (this.editedEvent) {
+      this.modalTitle = "Edit an event";
+      this.modalSubmit = "Edit";
+      const startDate = new Date(this.editedEvent.start)
+      const finishDate = new Date(this.editedEvent.finish)
+      const dateToPatch = {
+        startDay: StringUtils.convertDateToNbDate(startDate), finishDay: StringUtils.convertDateToNbDate(finishDate),
+        startTime: StringUtils.convertDateToNbTime(startDate), finishTime: StringUtils.convertDateToNbTime(finishDate)
+      }
+      let contactPatch = {contact: null, contactPhone: ''}
+      if(this.editedEvent.eventClients[0].client){
+        contactPatch.contact = this.editedEvent.eventClients[0].client
+      } else{
+        contactPatch.contact = this.editedEvent.eventClients[0].name,
+        contactPatch.contactPhone = this.editedEvent.eventClients[0].phone
+      }
+      this.eventForm.patchValue(Object.assign(this.editedEvent, dateToPatch, contactPatch))
+    }
+  }
+
+  setTypes(types: EventType[]) {
+    this.types = types;
+    if (this.editedEvent) {
+      this.eventForm.get('eventType').setValue(this.types.find(it => it.id === this.editedEvent.eventType.id))
+    }
   }
 
   onSubmit() {
@@ -58,40 +88,15 @@ export class CalendarFormComponent implements OnInit {
       phone: [this.isClient() ? contact.phone : this.eventForm.get('contactPhone').value],
       client: [this.isClient() ? contact : null]
     }))
-    this.calendarService.postEvent(this.eventForm.value).subscribe(res => this.modal.close(res))
-  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate, input: string): NgbDate {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+    this.calendarService
+      .postEvent(Object.assign({} ,this.eventForm.value,  this.editedEvent ? {uuid: this.editedEvent.uuid} : {}))
+      .subscribe(res => this.modal.close(res))
   }
 
   searchClient = (text$: Observable<string>) => text$
     .pipe(
-      switchMap(text => this.clientService.getClients('name', false, text)),
+      switchMap(text => this.clientService.getClients(0, 'name', false, text)),
+      map(page => page.content)
     )
   clientFormatter = (client: Client) => (client) ? client.name + ' ' + client.surname : ""
 
@@ -107,5 +112,13 @@ export class CalendarFormComponent implements OnInit {
       const contactControl = this.eventForm.get('contact');
       contactControl.setValue(contactControl.value.name + ' ' + contactControl.value.surname)
     }
+  }
+
+  getStartDay() {
+    return this.eventForm.get('startDay').value
+  }
+
+  getFinishDay() {
+    return this.eventForm.get('finishDay').value
   }
 }
