@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClientComponent } from './client/client.component';
 import { ClientListComponent } from './client-list/client-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClientService } from './client/client.service';
 import { AgreementComponent } from './agreement/agreement.component';
 import { AgreementListComponent } from './agreement-list/agreement-list.component';
@@ -25,7 +25,15 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalednarDatePickerComponent } from './calendar/calendar-date-picker/calednar-date-picker.component';
 import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.component';
+import { BasicAuthHtppInterceptorService } from './security/basic-http-auth.interceptor';
+import { AuthenticationService } from './security/authentication.service';
+import { AdminGuardService } from './security/admin-guard.service';
+import { LoginFormComponent } from './login-form/login-form.component';
 
+
+const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true },
+];
 
 @NgModule({
   declarations: [
@@ -42,7 +50,8 @@ import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.co
     ConfirmationWindowComponent,
     EditFormComponent,
     CalednarDatePickerComponent,
-    CalendarFormComponent
+    CalendarFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,7 +69,10 @@ import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.co
   ],
   providers: [
     ClientService,
-    AgreementService
+    AgreementService,
+    AuthenticationService,
+    AdminGuardService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmationWindowComponent]

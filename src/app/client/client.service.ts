@@ -4,6 +4,7 @@ import { Client } from './client.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Page } from '../shared/page.model';
+import { AuthenticationService } from '../security/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ClientService {
   apiGeneral = environment.apiUrl;
   clientSuffix = 'client/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthenticationService) { }
 
   getClients(page: number, sortBy: string, sortReverse: boolean, searchClient: string):Observable<Page<Client>>{
     let params;
@@ -30,7 +31,11 @@ export class ClientService {
   }
   
   getClientById(id: String):Observable<Client>{
-    return this.httpClient.get<Client>(this.apiGeneral+this.clientSuffix+id);
+    if (this.authService.hasAdminAuthority()) {
+      return this.httpClient.get<Client>(this.apiGeneral+this.clientSuffix+id);
+    } else {
+      return this.httpClient.get<Client>(this.apiGeneral+this.clientSuffix+'info');
+    }
   }
 
   deleteClient(id: String):Observable<Client>{

@@ -7,19 +7,21 @@ import { AgreementFormComponent } from './agreement-form/agreement-form.componen
 import { ClientDetailsComponent } from './client-details/client-details.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarFormComponent } from './calendar/calendar-form/calendar-form.component';
+import { AdminGuardService } from './security/admin-guard.service';
 
 
 const routes: Routes = [
- {path: 'client/:id', component: ClientDetailsComponent},
+ {path: 'client/:id', component: ClientDetailsComponent, canActivate: [AdminGuardService] },
   // {path: 'agreement/:id', component: AgreementComponent},
-  {path: 'clientList', component: ClientListComponent},
+  {path: 'clientList', component: ClientListComponent, canActivate: [AdminGuardService]},
   {path: 'agreementList', component:AgreementListComponent},
-  {path: 'addClient', component:ClientFormComponent},
-  {path: 'addAgreement', component:AgreementFormComponent},
-  {path: 'calendar', component:CalendarComponent},
-  {path: 'addEvent', component:CalendarFormComponent}
+  {path: 'userInfo', component: ClientDetailsComponent},
+  {path: 'addClient', component:ClientFormComponent, canActivate: [AdminGuardService]},
+  {path: 'addAgreement', component:AgreementFormComponent, canActivate: [AdminGuardService]},
+  {path: 'calendar', component:CalendarComponent, canActivate: [AdminGuardService]},
+  {path: 'addEvent', component:CalendarFormComponent, canActivate: [AdminGuardService]}
 ];
- 
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

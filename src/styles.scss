@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.no-link{
+    color:#007bff !important;
+    cursor: pointer
+}
+
 svg{
     width: calc(100% - 20px);
     position: absolute;

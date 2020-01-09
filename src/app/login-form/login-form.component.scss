@@ -1,0 +1,22 @@
+.login-form {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px lightgray solid;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: powderblue;
+  }
+  
+  .login-button {
+    margin-left: 50%;
+  }
+  
+  .login-control {
+    margin-bottom: 5px;
+    span {
+      margin-left: -10px;
+    }
+  }
+  
