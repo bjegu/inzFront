@@ -15,6 +15,7 @@ const routes: Routes = [
   // {path: 'agreement/:id', component: AgreementComponent},
   {path: 'clientList', component: ClientListComponent, canActivate: [AdminGuardService]},
   {path: 'agreementList', component:AgreementListComponent},
+  {path: 'userInfo', component: ClientDetailsComponent},
   {path: 'addClient', component:ClientFormComponent, canActivate: [AdminGuardService]},
   {path: 'addAgreement', component:AgreementFormComponent, canActivate: [AdminGuardService]},
   {path: 'calendar', component:CalendarComponent, canActivate: [AdminGuardService]},

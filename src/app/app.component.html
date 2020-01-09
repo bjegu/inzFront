@@ -7,6 +7,7 @@
         <a *ngIf="isAdmin()" routerLink="/clientList" routerLinkActive="active" class="nav-link">List of Clients  </a>
         <a *ngIf="isAdmin()" routerLink="/addClient" routerLinkActive="active" class="nav-link">Add a client</a>
         <a routerLink="/agreementList" routerLinkActive="active" class="nav-link">List of Agreements</a>
+        <a *ngIf="!isAdmin()" routerLink="/userInfo" routerLinkActive="active" class="nav-link">User informations</a>
         <a *ngIf="isAdmin()" routerLink="/addAgreement" routerLinkActive="active" class="nav-link">Add an agreement</a>
         <a *ngIf="isAdmin()" routerLink="/calendar" routerLinkActive="active" class="nav-link">Calendar</a>
         <a (click)="logout()" class="nav-link no-link">Logout</a>
