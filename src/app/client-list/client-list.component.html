@@ -4,11 +4,10 @@
         <input type="text" 
         class="form-control" placeholder="Search the client" 
         [(ngModel)]="searchClient"
-        (keyup.enter)="changePage(page)">
-        <div class="input-group-append"><button class="btn btn-primary" (click)="changePage(page)"><i class="fa fa-search"></i></button></div>
+        (keyup.enter)="changePage(0)">
+        <div class="input-group-append"><button class="btn btn-primary" (click)="changePage(0)"><i class="fa fa-search"></i></button></div>
       </div>      
     </div>
-{{searchClient}}
 
 
 <table class="table table-bordered table-striped">
