@@ -13,12 +13,14 @@ export class AgreementListComponent implements OnInit {
   agreementList: Agreement[] = [];
   totalPages: number;
   page = 1;
+  sortType='start';
+  sortReverse = false;
   searchAgreement: string;
 
   constructor(private agreementService: AgreementService) { }
 
   ngOnInit() {
-    this.agreementService.getAgreement(1).subscribe(response => this.fetchData(response))
+    this.changePage(1);
   }
 
   fetchData(page: Page<Agreement>){
@@ -29,15 +31,19 @@ export class AgreementListComponent implements OnInit {
   changePage(page: number){
     console.log(page);
     this.page = page;
-    this.agreementService.getAgreement(page).subscribe(response => this.fetchData(response))
+    this.agreementService.getAgreement(page, this.sortType, this.sortReverse,this.searchAgreement).subscribe(response => this.fetchData(response))
   }
 
   refresh(){
   this.changePage(this.page);
   }
 
-  getAgreementsData(){
-
+  sort(columnName: string){
+    if (this.sortType === columnName){
+      this.sortReverse = !this.sortReverse;
+    }
+    this.sortType = columnName;
+    this.changePage(this.page);
   }
   
 }

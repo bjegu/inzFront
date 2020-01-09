@@ -4,8 +4,8 @@
         <input type="text" 
         class="form-control" placeholder="Search the agreement" 
         [(ngModel)]="searchAgreement"
-        (keyup.enter)="getAgreementsData()">
-        <div class="input-group-append"><button class="btn btn-primary" (click)="getAgreementsData()"><i class="fa fa-search"></i></button></div>
+        (keyup.enter)="changePage(0)">
+        <div class="input-group-append"><button class="btn btn-primary" (click)="changePage(0)"><i class="fa fa-search"></i></button></div>
       </div>      
     </div>
 
@@ -18,22 +18,42 @@
 <table class="table table-bordered table-striped">
     <tr>
         <td>
-            Agreement number
+            <a (click)="sort('agreementNo')">
+                Agreement number
+              <span *ngIf="sortType == 'agreementNo' && sortReverse" class="fa fa-caret-down"></span>
+              <span *ngIf="sortType == 'agreementNo' && !sortReverse" class="fa fa-caret-up"></span>
+              </a>         
         </td>
         <td>
-            Client
+            <a (click)="sort('client')">
+                Client
+              <span *ngIf="sortType == 'client' && sortReverse" class="fa fa-caret-down"></span>
+              <span *ngIf="sortType == 'client' && !sortReverse" class="fa fa-caret-up"></span>
+              </a>  
         </td>
         <td>
-            Start date
+            <a (click)="sort('start')">
+                Start date
+              <span *ngIf="sortType == 'start' && sortReverse" class="fa fa-caret-down"></span>
+              <span *ngIf="sortType == 'start' && !sortReverse" class="fa fa-caret-up"></span>
+              </a> 
         </td>
         <td>
-            End date
+            <a (click)="sort('end')">
+                End date
+              <span *ngIf="sortType == 'end' && sortReverse" class="fa fa-caret-down"></span>
+              <span *ngIf="sortType == 'end' && !sortReverse" class="fa fa-caret-up"></span>
+              </a>   
         </td>
         <td>
             Additional info
         </td>
         <td>
-            Agreement type
+            <a (click)="sort('agreementType')">
+                Agreement type
+              <span *ngIf="sortType == 'agreementType' && sortReverse" class="fa fa-caret-down"></span>
+              <span *ngIf="sortType == 'agreementType' && !sortReverse" class="fa fa-caret-up"></span>
+              </a> 
         </td>
         
     </tr>
