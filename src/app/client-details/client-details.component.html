@@ -63,9 +63,8 @@
                 <button type="button" class="btn btn-info" (click)="isEdited=true">Edit a client</button>
             </div>
         </div>
-
-
-        <div *ngIf="client && isEdited">
-            <app-client-form [input]="client"></app-client-form>
-        </div>
     </div>
+</div>
+<div *ngIf="client && isEdited">
+    <app-client-form [input]="client"></app-client-form>
+</div>
